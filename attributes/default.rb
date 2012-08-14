@@ -35,10 +35,17 @@ default['buildbot']['slave']['name'] = 'example-slave'
 default['buildbot']['slave']['password'] = 'pass'
 default['buildbot']['slave']['basedir'] = 'slave'
 
-default['buildbot']['repo']['uri'] = 'git://github.com/buildbot/pyflakes.git'
-default['buildbot']['repo']['branch'] = 'master'
-default['buildbot']['repo']['workdir'] = 'gitpoller-workdir'
+default['buildbot']['project']['title'] = 'Pyflakes'
+default['buildbot']['project']['title_url'] = 'http://divmod.org/trac/wiki/DivmodPyflakes'
+default['buildbot']['project']['repo'] = 'git://github.com/buildbot/pyflakes.git'
+default['buildbot']['project']['branch'] = 'master'
+default['buildbot']['project']['workdir'] = 'gitpoller-workdir'
 
 default['buildbot']['status']['force_build'] = 'True' # 'False' or 'auth'
 default['buildbot']['status']['auth_user'] = 'pyflakes'
 default['buildbot']['status']['auth_pass'] = 'pyflakes'
+
+default['buildbot']['steps'] = [
+  %{Git(repourl='#{node['buildbot']['project']['repo']}', mode='copy')},
+  %{ShellCommand(command=["trial", "pyflakes"])}
+  ]

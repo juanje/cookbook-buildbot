@@ -57,9 +57,12 @@ template master['cfg'] do
   group node['buildbot']['group']
   variables(
     :slaves      => node['buildbot']['slaves'],
-    :repo        => node['buildbot']['repo']['uri'],
-    :branch      => node['buildbot']['repo']['branch'],
-    :workdir     => node['buildbot']['repo']['workdir'],
+    :title       => node['buildbot']['project']['title'],
+    :title_url   => node['buildbot']['project']['title_url'],
+    :repo        => node['buildbot']['project']['repo'],
+    :branch      => node['buildbot']['project']['branch'],
+    :workdir     => node['buildbot']['project']['workdir'],
+    :steps       => node['buildbot']['steps'],
     :force_build => force_build,
     :auth_user   => node['buildbot']['status']['auth_user'],
     :auth_pass   => node['buildbot']['status']['auth_pass']
