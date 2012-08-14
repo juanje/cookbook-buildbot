@@ -1,7 +1,12 @@
 default['buildbot']['user'] = 'buildbot'
 default['buildbot']['group'] = 'buildbot'
 
-default['buildbot']['master']['packages'] = %w{ git python-dev }
+default['buildbot']['master']['packages'] = case platform
+                                            when 'debian', 'ubuntu'
+                                                %w{ git-core python-dev }
+                                            else
+                                                %w{ git python-dev }
+                                            end
 default['buildbot']['master']['pip_packages'] = %w{ buildbot }
 default['buildbot']['master']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['master']['basedir'] = 'master'
@@ -12,7 +17,12 @@ default['buildbot']['master']['cfg'] = ::File.join(
   'master.cfg')
 
 
-default['buildbot']['slave']['packages'] = %w{ git python-dev }
+default['buildbot']['slave']['packages'] = case platform
+                                           when 'debian', 'ubuntu'
+                                               %w{ git-core python-dev }
+                                           else
+                                               %w{ git python-dev }
+                                           end
 default['buildbot']['slave']['pip_packages'] = %w{ buildbot-slave }
 default['buildbot']['slave']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['slave']['options'] = ''
