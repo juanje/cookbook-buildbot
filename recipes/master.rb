@@ -1,4 +1,4 @@
-include_recipe "python::pip"
+include_recipe "buildbot::_common"
 
 master = node['buildbot']['master']
 
@@ -10,12 +10,6 @@ master['pip_packages'].each do |pkg|
   python_pip pkg do
     action :install
   end
-end
-
-user "buildbot" do
-  comment "Buildbot user"
-  system true
-  shell "/bin/false"
 end
 
 directory master['deploy_to'] do

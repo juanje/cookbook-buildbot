@@ -1,4 +1,4 @@
-include_recipe "python::pip"
+include_recipe "buildbot::_common"
 
 slave = node['buildbot']['slave']
 
