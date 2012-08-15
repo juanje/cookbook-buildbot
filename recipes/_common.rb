@@ -9,3 +9,15 @@ user node['buildbot']['user'] do
   shell "/bin/false"
 end
 
+packages = value_for_platform(
+  ["centos", "redhat", "suse", "fedora" ] => {
+    "default" => %w{ git python-devel }
+  },
+  ["ubuntu", "debian"] => {
+    "default" => %w{ git python-dev }
+  }
+)
+
+packages.each do |pkg|
+  package pkg
+end

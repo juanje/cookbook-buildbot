@@ -2,14 +2,8 @@ include_recipe "buildbot::_common"
 
 slave = node['buildbot']['slave']
 
-slave['packages'].each do |pkg|
-  package pkg
-end
-
-slave['pip_packages'].each do |pkg|
-  python_pip pkg do
-    action :install
-  end
+python_pip "buildbot-slave" do
+  action :install
 end
 
 directory slave['deploy_to'] do

@@ -2,14 +2,8 @@ include_recipe "buildbot::_common"
 
 master = node['buildbot']['master']
 
-master['packages'].each do |pkg|
-  package pkg
-end
-
-master['pip_packages'].each do |pkg|
-  python_pip pkg do
-    action :install
-  end
+python_pip "buildbot" do
+  action :install
 end
 
 directory master['deploy_to'] do
