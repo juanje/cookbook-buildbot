@@ -26,14 +26,15 @@ default['buildbot']['slave']['packages'] = case platform
 default['buildbot']['slave']['pip_packages'] = %w{ buildbot-slave }
 default['buildbot']['slave']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['slave']['options'] = ''
+default['buildbot']['slave']['name'] = 'example-slave'
+default['buildbot']['slave']['password'] = 'pass'
+default['buildbot']['slave']['basedir'] = 'slave'
+#TODO: Info for the master. It should be discovered by searching
 default['buildbot']['slaves'] = [{
   :name     => 'example-slave',
   :password => 'pass',
   :basedir  => 'slave'
 }]
-default['buildbot']['slave']['name'] = 'example-slave'
-default['buildbot']['slave']['password'] = 'pass'
-default['buildbot']['slave']['basedir'] = 'slave'
 
 default['buildbot']['project']['title'] = 'Pyflakes'
 default['buildbot']['project']['title_url'] = 'http://divmod.org/trac/wiki/DivmodPyflakes'
