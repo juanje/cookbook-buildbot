@@ -1,11 +1,25 @@
 include_recipe "buildbot::_common"
 
+# Short var name for the node.master attributes
 master = node['buildbot']['master']
 
+# Hack to convert true and false to Python format
+force_build_attrib = node['buildbot']['status']['force_build']
+force_build = case force_build_attrib
+              when /^[Tt]rue$/, /^[Ff]alse$/
+                force_build_attrib.capitalize
+              else
+                %{'#{force_build_attrib}'}
+              end
+
+
+# Install the Python package
 python_pip "buildbot" do
   action :install
 end
 
+
+# Deploy the Master
 directory master['deploy_to'] do
   owner node['buildbot']['user']
   group node['buildbot']['group']
@@ -29,14 +43,6 @@ execute "Start the master" do
   action :nothing
 end
 
-force_build_attrib = node['buildbot']['status']['force_build']
-force_build = case force_build_attrib
-              when /^[Tt]rue$/, /^[Ff]alse$/
-                force_build_attrib.capitalize
-              else
-                %{'#{force_build_attrib}'}
-              end
-
 template master['cfg'] do
   source "master.cfg.erb"
   owner node['buildbot']['user']
@@ -55,5 +61,4 @@ template master['cfg'] do
   )
   notifies :run, resources(:execute => "Start the master"), :immediately
 end
-
 

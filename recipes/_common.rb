@@ -1,5 +1,7 @@
+# Needed to install Python packages
 include_recipe "python::pip"
 
+# Add user and group for Buildbot
 group node['buildbot']['group']
 
 user node['buildbot']['user'] do
@@ -9,6 +11,7 @@ user node['buildbot']['user'] do
   shell "/bin/false"
 end
 
+# Install the system's dependencies
 packages = value_for_platform(
   ["centos", "redhat", "suse", "fedora" ] => {
     "default" => %w{ git python-devel }
