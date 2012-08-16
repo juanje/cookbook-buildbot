@@ -17,7 +17,7 @@ packages = value_for_platform(
     "default" => %w{ git python-devel }
   },
   ["ubuntu", "debian"] => {
-    "default" => %w{ git python-dev }
+    "default" => %w{ git-core python-dev }
   }
 )
 
