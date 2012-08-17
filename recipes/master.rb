@@ -52,6 +52,7 @@ template master_cfg do
   group node['buildbot']['group']
   variables(
     :host        => master['host'],
+    :slave_port  => node['buildbot']['slave']['port'],
     :slaves      => node['buildbot']['slaves'],
     :title       => node['buildbot']['project']['title'],
     :title_url   => node['buildbot']['project']['title_url'],

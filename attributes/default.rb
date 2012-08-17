@@ -8,6 +8,7 @@ default['buildbot']['master']['options'] = ''
 default['buildbot']['master']['cfg'] = 'master.cfg'
 
 
+default['buildbot']['slave']['port'] = '9989'
 default['buildbot']['slave']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['slave']['options'] = ''
 default['buildbot']['slave']['name'] = 'example-slave'

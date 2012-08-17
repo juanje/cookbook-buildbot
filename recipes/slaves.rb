@@ -27,7 +27,7 @@ execute "Start the slave" do
 end
 
 execute "Create slave" do
-  command "buildslave create-slave #{slave['options']} #{slave_basedir} #{node['buildbot']['master']['host']}:9990 #{slave['name']} #{slave['password']}"
+  command "buildslave create-slave #{slave['options']} #{slave_basedir} #{node['buildbot']['master']['host']}:#{slave['port']} #{slave['name']} #{slave['password']}"
   user node['buildbot']['user']
   group node['buildbot']['group']
   notifies :run, resources(:execute => "Start the slave")
