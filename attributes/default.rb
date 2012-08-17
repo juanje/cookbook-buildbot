@@ -1,6 +1,7 @@
 default['buildbot']['user'] = 'buildbot'
 default['buildbot']['group'] = 'buildbot'
 
+default['buildbot']['master']['host'] = 'localhost'
 default['buildbot']['master']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['master']['basedir'] = 'master'
 default['buildbot']['master']['options'] = ''

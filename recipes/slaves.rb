@@ -27,7 +27,7 @@ execute "Start the slave" do
 end
 
 execute "Create slave" do
-  command "buildslave create-slave #{slave['options']} #{slave['basedir']} localhost:9989 #{slave['name']} #{slave['password']}"
+  command "buildslave create-slave #{slave['options']} #{slave['basedir']} #{node['buildbot']['master']['host']}:9989 #{slave['name']} #{slave['password']}"
   cwd slave['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
