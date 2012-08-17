@@ -3,6 +3,9 @@ include_recipe "buildbot::_common"
 # Short var name for the node.master attributes
 master = node['buildbot']['master']
 
+master_basedir = ::File.join(master['deploy_to'], master['basedir'])
+master_cfg = ::File.join(master_basedir, master['cfg'])
+
 # Hack to convert true and false to Python format
 force_build_attrib = node['buildbot']['status']['force_build']
 force_build = case force_build_attrib
@@ -29,7 +32,7 @@ directory master['deploy_to'] do
 end
 
 execute "Create master" do
-  command "buildbot create-master #{master['options']} #{master['basedir']}"
+  command "buildbot create-master #{master['options']} #{master_basedir}"
   cwd master['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
@@ -37,14 +40,14 @@ execute "Create master" do
 end
 
 execute "Start the master" do
-  command "buildbot restart master"
+  command "buildbot restart #{master_basedir}"
   cwd master['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
   action :nothing
 end
 
-template master['cfg'] do
+template master_cfg do
   source "master.cfg.erb"
   owner node['buildbot']['user']
   group node['buildbot']['group']

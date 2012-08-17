@@ -4,10 +4,7 @@ default['buildbot']['group'] = 'buildbot'
 default['buildbot']['master']['deploy_to'] = '/opt/buildbot'
 default['buildbot']['master']['basedir'] = 'master'
 default['buildbot']['master']['options'] = ''
-default['buildbot']['master']['cfg'] = ::File.join(
-  node['buildbot']['master']['deploy_to'],
-  node['buildbot']['master']['basedir'],
-  'master.cfg')
+default['buildbot']['master']['cfg'] = 'master.cfg'
 
 
 default['buildbot']['slave']['deploy_to'] = '/opt/buildbot'
