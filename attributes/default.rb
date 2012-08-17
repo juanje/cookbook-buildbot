@@ -12,11 +12,14 @@ default['buildbot']['slave']['options'] = ''
 default['buildbot']['slave']['name'] = 'example-slave'
 default['buildbot']['slave']['password'] = 'pass'
 default['buildbot']['slave']['basedir'] = 'slave'
-#TODO: Info for the master. It should be discovered by searching
+
+# Info for the master. This is for the case when it is deployed with chef-solo
+# One Master and one Slave.
+# For Chef Server it should be discovered by searching
 default['buildbot']['slaves'] = [{
-  :name     => 'example-slave',
-  :password => 'pass',
-  :basedir  => 'slave'
+  :name     => node['buildbot']['slave']['name'],
+  :password => node['buildbot']['slave']['password'],
+  :basedir  => node['buildbot']['slave']['basedir']
 }]
 
 default['buildbot']['project']['title'] = 'Pyflakes'
