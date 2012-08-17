@@ -21,6 +21,7 @@ end
 
 # Deploy the Master
 directory master['deploy_to'] do
+  recursive true
   owner node['buildbot']['user']
   group node['buildbot']['group']
   mode "0755"
