@@ -6,15 +6,6 @@ master = node['buildbot']['master']
 master_basedir = ::File.join(master['deploy_to'], master['basedir'])
 master_cfg = ::File.join(master_basedir, master['cfg'])
 
-# Hack to convert true and false to Python format
-force_build_attrib = node['buildbot']['status']['force_build']
-force_build = case force_build_attrib
-              when /^[Tt]rue$/, /^[Ff]alse$/
-                force_build_attrib.capitalize
-              else
-                %{'#{force_build_attrib}'}
-              end
-
 
 # Install the Python package
 python_pip "buildbot" do
@@ -51,18 +42,18 @@ template master_cfg do
   owner node['buildbot']['user']
   group node['buildbot']['group']
   variables(
-    :host        => master['host'],
-    :slave_port  => node['buildbot']['slave']['port'],
-    :slaves      => node['buildbot']['slaves'],
-    :title       => node['buildbot']['project']['title'],
-    :title_url   => node['buildbot']['project']['title_url'],
-    :repo        => node['buildbot']['project']['repo'],
-    :branch      => node['buildbot']['project']['branch'],
-    :workdir     => node['buildbot']['project']['workdir'],
-    :steps       => node['buildbot']['steps'],
-    :force_build => force_build,
-    :auth_user   => node['buildbot']['status']['auth_user'],
-    :auth_pass   => node['buildbot']['status']['auth_pass']
+    :host          => master['host'],
+    :databases     => master['databases'],
+    :slave_port    => node['buildbot']['slave']['port'],
+    :title         => node['buildbot']['project']['title'],
+    :title_url     => node['buildbot']['project']['title_url'],
+    :imports       => node['buildbot']['imports'],
+    :change_source => node['buildbot']['change_source'],
+    :slaves        => node['buildbot']['slaves'],
+    :builders      => node['buildbot']['builders'],
+    :steps         => node['buildbot']['steps'],
+    :schedulers    => node['buildbot']['schedulers'],
+    :statuses      => node['buildbot']['status']
   )
   notifies :run, resources(:execute => "Start the master"), :immediately
 end
