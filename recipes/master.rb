@@ -41,7 +41,6 @@ end
 
 execute "Start the master" do
   command "buildbot restart #{master_basedir}"
-  cwd master['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
   action :nothing

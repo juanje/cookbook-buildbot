@@ -3,6 +3,7 @@ include_recipe "buildbot::_common"
 # Short var name for the node.slave attributes
 slave = node['buildbot']['slave']
 
+slave_basedir = ::File.join(slave['deploy_to'], slave['basedir'])
 
 # Install the Python package
 python_pip "buildbot-slave" do
@@ -19,8 +20,7 @@ directory slave['deploy_to'] do
 end
 
 execute "Start the slave" do
-  command "buildslave restart slave"
-  cwd slave['deploy_to']
+  command "buildslave restart #{slave_basedir}"
   user node['buildbot']['user']
   group node['buildbot']['group']
   action :nothing
