@@ -41,8 +41,7 @@ default['buildbot']['slave']['basedir'] = 'slave'
 # For Chef Server it should be discovered by searching
 default['buildbot']['slaves'] = [{
   'name'     => node['buildbot']['slave']['name'],
-  'password' => node['buildbot']['slave']['password'],
-  'basedir'  => node['buildbot']['slave']['basedir']
+  'password' => node['buildbot']['slave']['password']
 }]
 
 # Change Source
