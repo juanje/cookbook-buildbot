@@ -33,14 +33,6 @@ slave_host    = ::File.join(slave_info, 'host')
 host_info     = node['buildbot']['slave']['host_info']
 
 
-if host_info.empty?
-  host_info = <<-EOF
-    Hostname: #{node['hostname']}
-    IP: #{node['ipaddress']}
-    OS: #{node['platform'].capitalize} #{node['platform_version']}
-    EOF
-end
-
 # Install the Python package
 python_pip "buildbot-slave" do
   action :install
@@ -79,9 +71,9 @@ file "Slave info admin" do
   action :nothing
 end
 
-file "Slave info host" do
+template "Slave info host" do
   path slave_host
-  content host_info
+  source "host.erb"
   owner node['buildbot']['user']
   group node['buildbot']['group']
   mode "0644"
@@ -94,7 +86,7 @@ execute "Create slave" do
   group node['buildbot']['group']
   notifies :run, resources(:execute => "Change new config"), :immediately
   notifies :create, resources(:file => "Slave info admin"), :immediately
-  notifies :create, resources(:file => "Slave info host"), :immediately
+  notifies :create, resources(:template => "Slave info host"), :immediately
   notifies :run, resources(:execute => "Start the slave")
 end
 
