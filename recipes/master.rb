@@ -1,10 +1,9 @@
 include_recipe "buildbot::_common"
 
-# Short var name for the node.master attributes
-master = node['buildbot']['master']
-
-master_basedir = ::File.join(master['deploy_to'], master['basedir'])
-master_cfg = ::File.join(master_basedir, master['cfg'])
+master_basedir = ::File.join(node['buildbot']['master']['deploy_to'],
+                             node['buildbot']['master']['basedir'])
+master_cfg = ::File.join(master_basedir, node['buildbot']['master']['cfg'])
+options = node['buildbot']['master']['options']
 
 
 # Install the Python package
@@ -14,7 +13,7 @@ end
 
 
 # Deploy the Master
-directory master['deploy_to'] do
+directory node['buildbot']['master']['deploy_to'] do
   recursive true
   owner node['buildbot']['user']
   group node['buildbot']['group']
@@ -23,8 +22,8 @@ directory master['deploy_to'] do
 end
 
 execute "Create master" do
-  command "buildbot create-master #{master['options']} #{master_basedir}"
-  cwd master['deploy_to']
+  command "buildbot create-master #{options} #{master_basedir}"
+  cwd node['buildbot']['master']['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
   action :run
@@ -42,8 +41,8 @@ template master_cfg do
   owner node['buildbot']['user']
   group node['buildbot']['group']
   variables(
-    :host          => master['host'],
-    :databases     => master['databases'],
+    :host          => node['buildbot']['master']['host'],
+    :databases     => node['buildbot']['master']['databases'],
     :slave_port    => node['buildbot']['slave']['port'],
     :title         => node['buildbot']['project']['title'],
     :title_url     => node['buildbot']['project']['title_url'],

@@ -1,9 +1,13 @@
 include_recipe "buildbot::_common"
 
-# Short var name for the node.slave attributes
-slave = node['buildbot']['slave']
+slave_basedir = ::File.join(node['buildbot']['slave']['deploy_to'],
+                            node['buildbot']['slave']['basedir'])
+options = node['buildbot']['slave']['options']
+host = node['buildbot']['master']['host']
+port = node['buildbot']['slave']['port']
+slave_name = node['buildbot']['slave']['name']
+password = node['buildbot']['slave']['password']
 
-slave_basedir = ::File.join(slave['deploy_to'], slave['basedir'])
 
 # Install the Python package
 python_pip "buildbot-slave" do
@@ -12,7 +16,7 @@ end
 
 
 # Deploy the Slave
-directory slave['deploy_to'] do
+directory node['buildbot']['slave']['deploy_to'] do
   owner node['buildbot']['user']
   group node['buildbot']['group']
   mode "0755"
@@ -27,7 +31,7 @@ execute "Start the slave" do
 end
 
 execute "Create slave" do
-  command "buildslave create-slave #{slave['options']} #{slave_basedir} #{node['buildbot']['master']['host']}:#{slave['port']} #{slave['name']} #{slave['password']}"
+  command "buildslave create-slave #{options} #{slave_basedir} #{host}:#{port} #{slave_name} #{password}"
   user node['buildbot']['user']
   group node['buildbot']['group']
   notifies :run, resources(:execute => "Start the slave")
