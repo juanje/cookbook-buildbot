@@ -20,8 +20,9 @@ include_recipe "buildbot::_common"
 
 master_basedir = ::File.join(node['buildbot']['master']['deploy_to'],
                              node['buildbot']['master']['basedir'])
-master_cfg = ::File.join(master_basedir, node['buildbot']['master']['cfg'])
-options = node['buildbot']['master']['options']
+master_cfg     = ::File.join(master_basedir,
+                             node['buildbot']['master']['cfg'])
+options        = node['buildbot']['master']['options']
 
 
 # Install the Python package

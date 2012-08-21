@@ -20,12 +20,12 @@ include_recipe "buildbot::_common"
 
 slave_basedir = ::File.join(node['buildbot']['slave']['deploy_to'],
                             node['buildbot']['slave']['basedir'])
-options = node['buildbot']['slave']['options']
-host = node['buildbot']['master']['host']
-port = node['buildbot']['slave']['port']
-slave_name = node['buildbot']['slave']['name']
-password = node['buildbot']['slave']['password']
-slave_tac = ::File.join(slave_basedir, 'buildbot.tac')
+options       = node['buildbot']['slave']['options']
+host          = node['buildbot']['master']['host']
+port          = node['buildbot']['slave']['port']
+slave_name    = node['buildbot']['slave']['name']
+password      = node['buildbot']['slave']['password']
+slave_tac     = ::File.join(slave_basedir, 'buildbot.tac')
 slave_new_tac = "#{slave_tac}.new"
 
 
