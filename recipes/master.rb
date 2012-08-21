@@ -41,7 +41,6 @@ end
 
 execute "Create master" do
   command "buildbot create-master #{options} #{master_basedir}"
-  cwd node['buildbot']['master']['deploy_to']
   user node['buildbot']['user']
   group node['buildbot']['group']
   action :run
