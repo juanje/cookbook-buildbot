@@ -29,7 +29,7 @@ c['change_source'] = <%= @change_source %>
 
 # Slaves
 c['slaves'] = [ <% @slaves.each do |slave| %>
-    BuildSlave("<%= slave['name'] %>", "<%= slave['password'] %>")
+    BuildSlave("<%= slave['name'] %>", "<%= slave['password'] %>"),
 <% end %>]
 
 # BuilderFactory
