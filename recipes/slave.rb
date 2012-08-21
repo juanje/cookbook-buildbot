@@ -25,6 +25,8 @@ host = node['buildbot']['master']['host']
 port = node['buildbot']['slave']['port']
 slave_name = node['buildbot']['slave']['name']
 password = node['buildbot']['slave']['password']
+slave_tac = ::File.join(slave_basedir, 'buildbot.tac')
+slave_new_tac = "#{slave_tac}.new"
 
 
 # Install the Python package
@@ -48,10 +50,19 @@ execute "Start the slave" do
   action :nothing
 end
 
+execute "Change new config" do
+  command "mv #{slave_new_tac} #{slave_tac}"
+  user node['buildbot']['user']
+  group node['buildbot']['group']
+  only_if { File.exists?(slave_new_tac) }
+  action :nothing
+end
+
 execute "Create slave" do
   command "buildslave create-slave #{options} #{slave_basedir} #{host}:#{port} #{slave_name} #{password}"
   user node['buildbot']['user']
   group node['buildbot']['group']
+  notifies :run, resources(:execute => "Change new config"), :immediately
   notifies :run, resources(:execute => "Start the slave")
 end
 
