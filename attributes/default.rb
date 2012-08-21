@@ -35,6 +35,7 @@ default['buildbot']['slave']['options'] = ''
 default['buildbot']['slave']['name'] = 'example-slave'
 default['buildbot']['slave']['password'] = 'pass'
 default['buildbot']['slave']['basedir'] = 'slave'
+default['buildbot']['slave']['admin'] = 'Your Name Here <admin@youraddress.invalid>'
 
 # Info for the master. This is for the case when it is deployed with chef-solo
 # One Master and one Slave.
