@@ -38,6 +38,10 @@ python_pip "buildbot-slave" do
   action :install
 end
 
+node['buildbot']['slave']['packages'].each do |pkg|
+  package pkg
+end
+
 
 # Deploy the Slave
 directory node['buildbot']['slave']['deploy_to'] do
