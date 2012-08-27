@@ -4,6 +4,17 @@ Description
 Install a master and slave Buildbot with the default configuration
 
 
+NOTE
+----
+
+Right now, this cookbook is functional and will create a _master_ and _slave_
+with the same configuration the Official Guide provides.
+
+It's also highly configurable through attributes.
+
+But this need some work to make it more flexible and suit more case scenarios.
+
+
 Requirements
 ============
 
@@ -22,6 +33,17 @@ Platform
 Usage
 =====
 
+You can create a Buildbox box just adding the default recipe to the node's _runlist_.
+
+But you also can create separate boxes, master and slaves, by adding just the recipe `master`
+or the recipe `slave`.
+
+
+NOTE
+----
+
+Some _Vagrant_ and _role_ examples will be provide soon. Those examples will show
+how to change almost anything with attributes.
 
 
 License and Author
